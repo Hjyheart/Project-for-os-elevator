@@ -42,4 +42,4 @@ ui的主线程
 - 没有实现邻近楼层的突然请求的拒绝
 
 ## Demo
-![Demo][https://github.com/Hjyheart/os-project-elevator/blob/master/%E7%94%B5%E6%A2%AF%E8%B0%83%E5%BA%A6/%E7%94%B5%E6%A2%AFDemo.png]
+![Demo](https://github.com/Hjyheart/os-project-elevator/blob/master/%E7%94%B5%E6%A2%AF%E8%B0%83%E5%BA%A6/%E7%94%B5%E6%A2%AFDemo.png)
