@@ -94,13 +94,15 @@ public class elevator extends Thread{
             while (currentState == 1){
                 boolean blueFlag = false;
                 for (int i = 0; i < 20; i++){
-                    buttonList[i].setText("UP");
+                    buttonList[i].setText("上");
                 }
                 // 下客
                 if (!upStopList.isEmpty() && currentFloor  == upStopList.peek()) {
                     while (currentFloor  == upStopList.peek()) {
                         Integer a = upStopList.poll();
-                        break;
+                        ui.logs.append("电梯" + name + ": 第" + (currentFloor + 1) + "楼" + "下客\n");
+                        if(upStopList.isEmpty())
+                            break;
                     }
                     buttonList[currentFloor].setBackground(Color.BLUE);
                     blueFlag = true;
@@ -114,6 +116,8 @@ public class elevator extends Thread{
                             maxUp = (int) ui.queue[currentFloor][0].get(i) - 1;
                         }
                         addUp((Integer) ui.queue[currentFloor][0].get(i) - 1);
+                        ui.logs.append("电梯" + name + ": 第" + (currentFloor + 1) + "楼载上去" + ui.queue[currentFloor][0].get(i)
+                        + "楼的乘客\n");
                     }
                     buttonList[currentFloor].setBackground(Color.BLUE);
                     blueFlag = true;
@@ -129,12 +133,15 @@ public class elevator extends Thread{
                             minDown = (int)ui.queue[currentFloor][1].get(i) - 1;
                         }
                         addDown((Integer) ui.queue[currentFloor][1].get(i) - 1);
+                        ui.logs.append("电梯" + name + ": 第" + (currentFloor + 1) + "楼载上去" + ui.queue[currentFloor][1].get(i)
+                                + "楼的乘客\n");
                     }
                     if (!downStopList.isEmpty()){
                         ui.queue[currentFloor][1].clear();
                         setCurrentState(-1);
                         blueFlag = true;
                         ui.queLock[currentFloor][1] = true;
+                        ui.logs.append("电梯" + name + " :开始下降\n");
                         break;
                     }
                 }
@@ -154,6 +161,7 @@ public class elevator extends Thread{
                     maxUp = 0;
                     minDown = 19;
                     buttonList[currentFloor].setBackground(Color.RED);
+                    ui.logs.append("电梯" + name + ": 停止运作\n");
                     break;
                 }
                 buttonList[currentFloor].setBackground(Color.WHITE);
@@ -169,14 +177,16 @@ public class elevator extends Thread{
             while(currentState == -1){
                 boolean blueFlag = false;
                 for (int i = 0; i < 20; i++){
-                    buttonList[i].setText("DOWN");
+                    buttonList[i].setText("下");
                 }
                 // 下客
                 if (!downStopList.isEmpty() && currentFloor  == downStopList.peek()) {
                     System.out.println(downStopList.peek());
                     while (currentFloor  == downStopList.peek()) {
                         Integer a = downStopList.poll();
-                        break;
+                        ui.logs.append("电梯" + name + ": 第" + (currentFloor + 1) + "楼" + "下客\n");
+                        if(downStopList.isEmpty())
+                            break;
                     }
                     buttonList[currentFloor].setBackground(Color.BLUE);
                     blueFlag = true;
@@ -190,7 +200,8 @@ public class elevator extends Thread{
                             minDown = (int) ui.queue[currentFloor][1].get(i) - 1;
                         }
                         addDown((Integer) ui.queue[currentFloor][1].get(i) - 1);
-                        System.out.println("载上" + ui.queue[currentFloor][1].get(i) + downStopList.toString());
+                        ui.logs.append("电梯" + name + ": 第" + (currentFloor + 1) + "楼载上去" + ui.queue[currentFloor][1].get(i)
+                                + "楼的乘客\n");
                     }
                     buttonList[currentFloor].setBackground(Color.BLUE);
                     blueFlag = true;
@@ -207,12 +218,15 @@ public class elevator extends Thread{
                             maxUp = (int)ui.queue[currentFloor][0].get(i) - 1;
                         }
                         addUp((Integer) ui.queue[currentFloor][0].get(i) - 1);
+                        ui.logs.append("电梯" + name + ": 第" + (currentFloor + 1) + "楼载上去" + ui.queue[currentFloor][0].get(i)
+                                + "楼的乘客\n");
                     }
                     if (!upStopList.isEmpty()){
                         ui.queue[currentFloor][0].clear();
                         setCurrentState(1);
                         blueFlag = true;
                         ui.queLock[currentFloor][0] = true;
+                        ui.logs.append("电梯" + name + " :开始上升\n");
                         break;
                     }
                 }
@@ -231,6 +245,7 @@ public class elevator extends Thread{
                     setCurrentState(0);
                     maxUp = 0;
                     minDown = 19;
+                    ui.logs.append("电梯" + name + ": 停止运作\n");
                     break;
                 }
                 buttonList[currentFloor].setBackground(Color.WHITE);

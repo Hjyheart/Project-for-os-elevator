@@ -18,6 +18,7 @@ public class ui {
     public static JButton[] forThree = new JButton[20];
     public static JButton[] forFour = new JButton[20];
     public static JButton[] forFive = new JButton[20];
+    public static TextArea logs = new TextArea();
     public static elevator one;
     public static elevator two;
     public static elevator three;
@@ -73,8 +74,8 @@ public class ui {
                         queue[finalI][0].add(Integer.parseInt(up[finalI].getSelectedItem().toString()));
                         labels[finalI].setBackground(Color.GREEN);
                         up[finalI].setSelectedIndex(0);
-                        // for test
-                        System.out.println(queue[finalI][0]);
+                        logs.append("第" + (finalI + 1) + "楼有人要去"
+                                + queue[finalI][0] + "楼\n");
                     }
                 }
             });
@@ -94,8 +95,8 @@ public class ui {
                         queue[finalI][1].add(Integer.parseInt(down[finalI].getSelectedItem().toString()));
                         labels[finalI].setBackground(Color.GREEN);
                         down[finalI].setSelectedIndex(0);
-                        // for test
-                        System.out.println(queue[finalI][1]);
+                        logs.append("第" + (finalI + 1) + "楼有人要去"
+                                + queue[finalI][1] + "楼\n");
                     }
                 }
             });
@@ -135,30 +136,41 @@ public class ui {
             forFive[i].setBackground(Color.WHITE);
         }
         forFive[0].setBackground(Color.RED);
+
         JFrame frame = new JFrame("电梯");
-        frame.setLayout(new GridLayout(21, 8));
+        frame.setLayout(new GridLayout(1, 2));
+        GridLayout grid = new GridLayout(21, 8);
+        Container c = new Container();
+        c.setLayout(grid);
         // 标签
-        frame.add(new Label("楼层"));
-        frame.add(new JLabel("上"));
-        frame.add(new JLabel("下"));
-        frame.add(new JLabel("电梯1"));
-        frame.add(new JLabel("电梯2"));
-        frame.add(new JLabel("电梯3"));
-        frame.add(new JLabel("电梯4"));
-        frame.add(new JLabel("电梯5"));
-        // 装载
+        c.add(new JLabel("楼层"));
+        c.add(new JLabel("上"));
+        c.add(new JLabel("下"));
+        c.add(new JLabel("电梯1"));
+        c.add(new JLabel("电梯2"));
+        c.add(new JLabel("电梯3"));
+        c.add(new JLabel("电梯4"));
+        c.add(new JLabel("电梯5"));
+        // 按钮
         for (int i = 20; i > 0; i--){
-            frame.add(labels[i - 1]);
-            frame.add(up[i - 1]);
-            frame.add(down[i - 1]);
+            c.add(labels[i - 1]);
+            c.add(up[i - 1]);
+            c.add(down[i - 1]);
             for (int k = 0; k < 5; k++) {
-                frame.add(forOne[i - 1]);
-                frame.add(forTwo[i - 1]);
-                frame.add(forThree[i - 1]);
-                frame.add(forFour[i - 1]);
-                frame.add(forFive[i - 1]);
+                c.add(forOne[i - 1]);
+                c.add(forTwo[i - 1]);
+                c.add(forThree[i - 1]);
+                c.add(forFour[i - 1]);
+                c.add(forFive[i - 1]);
             }
         }
+
+        logs.setEditable(false);
+        logs.setFont(new Font("黑体",Font.BOLD,32));
+        frame.add(c);
+        JScrollPane pane = new JScrollPane(logs);
+        frame.add(pane);
+
         frame.setSize(new Dimension(2000, 1500));
         frame.setVisible(true);
 
@@ -212,7 +224,7 @@ public class ui {
                 elevators.get(index).setCurrentState(1);
                 elevators.get(index).addUp(i);
                 elevators.get(index).setMaxUp(i);
-//                System.out.println(index + " " + i);
+                logs.append("电梯" + (index + 1) + "启动 上升\n");
                 Thread.sleep(500);
                 return;
             }
@@ -221,12 +233,14 @@ public class ui {
                 elevators.get(index).setCurrentState(-1);
                 elevators.get(index).addDown(i);
                 elevators.get(index).setMinDown(i);
+                logs.append("电梯" + (index + 1) + "启动 下降\n");
                 Thread.sleep(500);
                 return;
             }
             // 最优停滞电梯位于当前楼层
             if (elevators.get(index).getCurrentFloor() == i){
                 elevators.get(index).setCurrentState(1);
+                logs.append("电梯" + (index + 1) + "启动\n");
                 Thread.sleep(500);
                 return;
             }
