@@ -28,6 +28,17 @@ public class ui {
     public static ArrayList[][] queue = new ArrayList[20][2];
     public static boolean queLock[][] = new boolean[20][2];
 
+    private static String helpMessage = "<html><h2>使用说明</h2><ul><li>位于左侧的多选按钮可以选择要去的楼层，有需求的楼层会显示" +
+            "绿色</li><li>红色按钮代表电梯的位置，电梯初始状态为“－”，在上升和下降时分别为“UP”和“DOWN”</li><li>电梯在下客时会呈现蓝" +
+            "色，并滞留一段时间</li></ul><h2>注意事项</h2><ul><li>上升的电梯在到达任何楼层时会一次性带走所有上升的乘客</li><li>下降" +
+            "的电梯在到达任何楼层时会一次性带走所有下降的乘客</li></ul><h2>基本算法</h2><h3>乘客</h3><ul><li>在乘客提出需求时检索" +
+            "当前所有电梯状态。优先考虑离乘客比较近且将要到达该楼层的移动电梯</li><li>在没有符合条件的移动电梯的情况下，调动离乘客最近" +
+            "的静止电梯</li></ul><h3>电梯</h3><ul><li>电梯初始状态均为静止，在响应请求时会被设置为上升或下降状态</li><li>电梯自检" +
+            "状态来变更行为</li><li>电梯每到一个楼层都会自检下客队列，判断是否下客</li><li>电梯每到一个楼层都会自检当前楼层对应自己状" +
+            "态的上客队列，判断是否需要在该楼层停下来载客</li><li>当电梯在某一楼层下光乘客，并且该楼层有乘客要上电梯，电梯将自行变更状态" +
+            "载客运行</li></ul></html>";
+
+
     public static void init() {
         // 应答队列控制锁初始化
         for (int i = 0; i < 20; i++){
@@ -58,9 +69,10 @@ public class ui {
             up[i].addItemListener(new ItemListener() {
                 @Override
                 public void itemStateChanged(ItemEvent e) {
-                    if (ItemEvent.SELECTED == e.getStateChange()) {
+                    if (ItemEvent.SELECTED == e.getStateChange() && !up[finalI].getSelectedItem().toString().equals("-")) {
                         queue[finalI][0].add(Integer.parseInt(up[finalI].getSelectedItem().toString()));
                         labels[finalI].setBackground(Color.GREEN);
+                        up[finalI].setSelectedIndex(0);
                         // for test
                         System.out.println(queue[finalI][0]);
                     }
@@ -78,9 +90,10 @@ public class ui {
             down[i].addItemListener(new ItemListener() {
                 @Override
                 public void itemStateChanged(ItemEvent e) {
-                    if (ItemEvent.SELECTED == e.getStateChange()) {
+                    if (ItemEvent.SELECTED == e.getStateChange() && !down[finalI].getSelectedItem().toString().equals("-")) {
                         queue[finalI][1].add(Integer.parseInt(down[finalI].getSelectedItem().toString()));
                         labels[finalI].setBackground(Color.GREEN);
+                        down[finalI].setSelectedIndex(0);
                         // for test
                         System.out.println(queue[finalI][1]);
                     }
@@ -146,7 +159,7 @@ public class ui {
                 frame.add(forFive[i - 1]);
             }
         }
-        frame.pack();
+        frame.setSize(new Dimension(2000, 1500));
         frame.setVisible(true);
 
         // 初始化电梯
@@ -160,6 +173,12 @@ public class ui {
         elevators.add(four);
         five = new elevator(5, 0, forFive);
         elevators.add(five);
+
+        // help提示框
+        JOptionPane.showMessageDialog(null,
+                helpMessage,
+                "使用说明",
+                JOptionPane.DEFAULT_OPTION);
     }
 
     static class lightManger extends Thread{

@@ -93,6 +93,9 @@ public class elevator extends Thread{
             // 上升状态
             while (currentState == 1){
                 boolean blueFlag = false;
+                for (int i = 0; i < 20; i++){
+                    buttonList[i].setText("UP");
+                }
                 // 下客
                 if (!upStopList.isEmpty() && currentFloor  == upStopList.peek()) {
                     while (currentFloor  == upStopList.peek()) {
@@ -165,6 +168,9 @@ public class elevator extends Thread{
             // 下降状态
             while(currentState == -1){
                 boolean blueFlag = false;
+                for (int i = 0; i < 20; i++){
+                    buttonList[i].setText("DOWN");
+                }
                 // 下客
                 if (!downStopList.isEmpty() && currentFloor  == downStopList.peek()) {
                     System.out.println(downStopList.peek());
@@ -238,6 +244,9 @@ public class elevator extends Thread{
             }
             // 停滞状态
             while(currentState == 0){
+                for (int i = 0; i < 20; i++){
+                    buttonList[i].setText("-");
+                }
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {

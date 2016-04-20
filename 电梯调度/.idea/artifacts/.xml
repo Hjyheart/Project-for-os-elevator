@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="电梯">
+    <output-path>$PROJECT_DIR$/out/artifacts/</output-path>
+    <root id="archive" name="电梯.jar">
+      <element id="module-output" name="电梯调度" />
+    </root>
+  </artifact>
+</component>
