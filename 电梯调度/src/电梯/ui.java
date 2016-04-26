@@ -2,6 +2,8 @@ package 电梯;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.*;
@@ -31,7 +33,8 @@ public class ui {
 
     private static String helpMessage = "<html><h2>使用说明</h2><ul><li>位于左侧的多选按钮可以选择要去的楼层，有需求的楼层会显示" +
             "绿色</li><li>红色按钮代表电梯的位置，电梯初始状态为“－”，在上升和下降时分别为“UP”和“DOWN”</li><li>电梯在下客时会呈现蓝" +
-            "色，并滞留一段时间</li></ul><h2>注意事项</h2><ul><li>上升的电梯在到达任何楼层时会一次性带走所有上升的乘客</li><li>下降" +
+            "色，并滞留一段时间</li><li>第一排按钮表示电梯状态,点击可使电梯进入紧急状态使电梯暂停,再次点击即可恢复正常</li></ul><h2>注" +
+            "意事项</h2><ul><li>上升的电梯在到达任何楼层时会一次性带走所有上升的乘客</li><li>下降" +
             "的电梯在到达任何楼层时会一次性带走所有下降的乘客</li></ul><h2>基本算法</h2><h3>乘客</h3><ul><li>在乘客提出需求时检索" +
             "当前所有电梯状态。优先考虑离乘客比较近且将要到达该楼层的移动电梯</li><li>在没有符合条件的移动电梯的情况下，调动离乘客最近" +
             "的静止电梯</li></ul><h3>电梯</h3><ul><li>电梯初始状态均为静止，在响应请求时会被设置为上升或下降状态</li><li>电梯自检" +
@@ -108,6 +111,23 @@ public class ui {
             forOne[i].setBackground(Color.WHITE);
         }
         forOne[0].setBackground(Color.RED);
+        forOne[0].setText("正常");
+        forOne[0].addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(forOne[0].getText().equals("正常")){
+                    forOne[0].setText("异常");
+                    forOne[0].setBackground(Color.ORANGE);
+                    one.setCurrentState(-2);
+                    logs.append("电梯1发生故障,停止运行!\n");
+                }else {
+                    forOne[0].setText("正常");
+                    forOne[0].setBackground(Color.WHITE);
+                    one.setCurrentState(2);
+                    logs.append("电梯1恢复运作!\n");
+                }
+            }
+        });
         // 电梯2初始化
         for (int i = 0; i < 20; i++){
             forTwo[i] = new JButton("-");
@@ -115,6 +135,23 @@ public class ui {
             forTwo[i].setBackground(Color.WHITE);
         }
         forTwo[0].setBackground(Color.RED);
+        forTwo[0].setText("正常");
+        forTwo[0].addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(forTwo[0].getText().equals("正常")){
+                    forTwo[0].setText("异常");
+                    forTwo[0].setBackground(Color.ORANGE);
+                    two.setCurrentState(-2);
+                    logs.append("电梯2发生故障,停止运行!\n");
+                }else {
+                    forTwo[0].setText("正常");
+                    forTwo[0].setBackground(Color.WHITE);
+                    two.setCurrentState(2);
+                    logs.append("电梯2恢复运作!\n");
+                }
+            }
+        });
         // 电梯3初始化
         for (int i = 0; i < 20; i++){
             forThree[i] = new JButton("-");
@@ -122,6 +159,23 @@ public class ui {
             forThree[i].setBackground(Color.WHITE);
         }
         forThree[0].setBackground(Color.RED);
+        forThree[0].setText("正常");
+        forThree[0].addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(forThree[0].getText().equals("正常")){
+                    forThree[0].setText("异常");
+                    forThree[0].setBackground(Color.ORANGE);
+                    three.setCurrentState(-2);
+                    logs.append("电梯3发生故障,停止运行!\n");
+                }else {
+                    forThree[0].setText("正常");
+                    forThree[0].setBackground(Color.WHITE);
+                    three.setCurrentState(2);
+                    logs.append("电梯3恢复运作!\n");
+                }
+            }
+        });
         // 电梯4初始化
         for (int i = 0; i < 20; i++){
             forFour[i] = new JButton("-");
@@ -129,6 +183,23 @@ public class ui {
             forFour[i].setBackground(Color.WHITE);
         }
         forFour[0].setBackground(Color.RED);
+        forFour[0].setText("正常");
+        forFour[0].addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(forFour[0].getText().equals("正常")){
+                    forFour[0].setText("异常");
+                    forFour[0].setBackground(Color.ORANGE);
+                    four.setCurrentState(-2);
+                    logs.append("电梯4发生故障,停止运行!\n");
+                }else {
+                    forFour[0].setText("正常");
+                    forFour[0].setBackground(Color.WHITE);
+                    four.setCurrentState(2);
+                    logs.append("电梯4恢复运作!\n");
+                }
+            }
+        });
         // 电梯5初始化
         for (int i = 0; i < 20; i++){
             forFive[i] = new JButton("-");
@@ -136,6 +207,23 @@ public class ui {
             forFive[i].setBackground(Color.WHITE);
         }
         forFive[0].setBackground(Color.RED);
+        forFive[0].setText("正常");
+        forFive[0].addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(forFive[0].getText().equals("正常")){
+                    forFive[0].setText("异常");
+                    forFive[0].setBackground(Color.ORANGE);
+                    five.setCurrentState(-2);
+                    logs.append("电梯5发生故障,停止运行!\n");
+                }else {
+                    forFive[0].setText("正常");
+                    forFive[0].setBackground(Color.WHITE);
+                    five.setCurrentState(2);
+                    logs.append("电梯5恢复运作!\n");
+                }
+            }
+        });
 
         JFrame frame = new JFrame("电梯");
         frame.setLayout(new GridLayout(1, 2));

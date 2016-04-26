@@ -18,6 +18,7 @@ public class elevator extends Thread{
      */
     private int name;
     private int currentState;
+    private int emerState;
     private int currentFloor;
     private int currentMaxFloor;
     private int maxUp;
@@ -45,6 +46,7 @@ public class elevator extends Thread{
         currentState = dir;
         currentFloor = 0;
         currentMaxFloor = 0;
+        emerState = -1;
         this.buttonList = buttonList;
     }
 
@@ -53,6 +55,13 @@ public class elevator extends Thread{
     }
 
     public void setCurrentState(int currentState) {
+        if(currentState == -2){
+            emerState = this.currentState;
+        }
+        if(currentState == 2){
+            currentState = emerState;
+            emerState = -1;
+        }
         this.currentState = currentState;
     }
 
@@ -93,7 +102,7 @@ public class elevator extends Thread{
             // 上升状态
             while (currentState == 1){
                 boolean blueFlag = false;
-                for (int i = 0; i < 20; i++){
+                for (int i = 1; i < 20; i++){
                     buttonList[i].setText("上");
                 }
                 // 下客
@@ -176,7 +185,7 @@ public class elevator extends Thread{
             // 下降状态
             while(currentState == -1){
                 boolean blueFlag = false;
-                for (int i = 0; i < 20; i++){
+                for (int i = 1; i < 20; i++){
                     buttonList[i].setText("下");
                 }
                 // 下客
@@ -259,7 +268,7 @@ public class elevator extends Thread{
             }
             // 停滞状态
             while(currentState == 0){
-                for (int i = 0; i < 20; i++){
+                for (int i = 1; i < 20; i++){
                     buttonList[i].setText("-");
                 }
                 try {
